@@ -1,10 +1,9 @@
 package org.kordamp.duke.info;
 
+import java.net.URI;
 import run.duke.ToolFinder;
 import run.duke.ToolInstaller;
 import run.duke.Workbench;
-
-import java.net.URI;
 
 public record JarVizInstaller(String namespace, String name) implements ToolInstaller {
   public JarVizInstaller() {
@@ -17,7 +16,7 @@ public record JarVizInstaller(String namespace, String name) implements ToolInst
     var tag = version.equals("early-access") ? version : 'v' + version;
     var jar = "jarviz-tool-provider-" + version + ".jar";
     var source = URI.create(releases + "/" + tag + "/" + jar);
-    var folder = workbench.folders().tool(namespace,name + "@" + version);
+    var folder = workbench.folders().tool(namespace, name + "@" + version);
     var target = folder.resolve(jar);
     workbench.browser().copy(source, target);
     return ToolFinder.ofJavaToolbox(folder);
