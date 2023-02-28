@@ -19,8 +19,10 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.spi.ToolProvider;
 import java.util.stream.Stream;
-sealed interface Duke {
-  String VERSION = "2023.02.28+05.31";
+
+/** Duke's command-line program and interactive shell interface. */
+interface Duke {
+  String VERSION = "2023.02.28+10.23";
 
   /** Duke's command-line program. */
   static void main(String... args) {
@@ -98,7 +100,7 @@ sealed interface Duke {
   }
 
   /** Runtime components and */
-  record Context(Flags flags, Paths paths, PrintWriter printer) implements Duke {
+  record Context(Flags flags, Paths paths, PrintWriter printer) {
     List<Path> getModuleCompilationUnits() {
       var directory = paths.duke();
       if (Files.notExists(directory)) return List.of();
@@ -309,7 +311,7 @@ sealed interface Duke {
       }
     }
 
-    private final class GitHubHelper {
+    private static final class GitHubHelper {
       String getShaOrIsoInstant() {
         var sha = System.getenv("GITHUB_SHA");
         if (sha != null) return sha.substring(0, Math.min(7, sha.length()));
