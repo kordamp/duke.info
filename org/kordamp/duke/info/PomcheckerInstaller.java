@@ -13,7 +13,7 @@ public record PomcheckerInstaller(String namespace, String name) implements Tool
   @Override
   public ToolFinder install(Workbench workbench, String version) {
     var releases = "https://github.com/kordamp/pomchecker/releases/download";
-    var tag = version.contains("SNAPSHOT") ? "early-access" : 'v' + version;
+    var tag = version.equals("early-access") ? version : 'v' + version;
     var jar = "pomchecker-toolprovider-" + version + ".jar";
     var source = URI.create(releases + "/" + tag + "/" + jar);
     var folder = workbench.folders().tool(namespace, name + "@" + version);
